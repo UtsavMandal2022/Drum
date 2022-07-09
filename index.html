@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum</title>
+    <style>
+        body
+        {
+            background-image: url("drum.jpg");
+        }
+div .key
+{
+    background-color: #de8d8d;
+    display: inline-block;
+    border: 5px double black;
+    width: 100px;
+    text-align: center;
+    height: 100px;
+    position: relative;
+    left: 15%;
+    transition: all .07s ease;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: bold;
+}
+kbd
+{
+    position: relative;
+    top: 30%;
+}
+.keys
+{
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 45%;
+}
+.playing
+{
+    transform: scale(1.1);
+  border-color: #ffc600;
+  box-shadow: 0 0 1rem #ffc600;
+}
+    </style>
+</head>
+<body>
+<div class="keys">
+<div class="key" data-key="65">
+<kbd>A</kbd>
+</div>
+<div class="key" data-key="83">
+<kbd>S</kbd>
+</div>
+<div class="key" data-key="68">
+<kbd>D</kbd>
+</div>
+<div class="key" data-key="70">
+<kbd>F</kbd>
+</div>
+<div class="key" data-key="71">
+<kbd>G</kbd>
+</div>
+<div class="key" data-key="72">
+<kbd>H</kbd>
+</div>
+<div class="key" data-key="74">
+<kbd>J</kbd>
+</div>
+<div class="key" data-key="75">
+<kbd>K</kbd>
+</div>
+<div class="key" data-key="76">
+<kbd>L</kbd>
+</div>
+</div>
+<audio data-key="65" src="sounds/clap.wav"></audio>
+<audio data-key="83" src="sounds/hihat.wav"></audio>
+<audio data-key="68" src="sounds/kick.wav"></audio>
+<audio data-key="70" src="sounds/openhat.wav"></audio>
+<audio data-key="71" src="sounds/boom.wav"></audio>
+<audio data-key="72" src="sounds/ride.wav"></audio>
+<audio data-key="74" src="sounds/snare.wav"></audio>
+<audio data-key="75" src="sounds/tom.wav"></audio>
+<audio data-key="76" src="sounds/tink.wav"></audio>
+<script>
+ function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+window.addEventListener('keydown',playsound);
+function playsound(e)
+{const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+    key.classList.add('playing');
+    audio.currentTime = 0;
+audio.play();
+}
+const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+</script>  
+</body>
+</html>
